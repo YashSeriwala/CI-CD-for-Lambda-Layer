@@ -20,31 +20,25 @@ jobs:
       with:
         python-version: '3.13'
 
-    - name: Zip Lambda function
+    # Step 3: Install dependencies and package layer
+    - name: Install Dependencies and Package Layer
       run: |
-        mkdir package
-        pip install -r ./layer/requirements.txt -t package/  # If you have dependencies
-        cd package
-        zip -r ../function.zip .
-        cd ..
-        zip -g function.zip lambda_function.py  # Add the main Lambda function code
-
+        mkdir -p layer/python
+        pip install -r ./layer/requirements.txt -t layer/python
+        cd layer && zip -r ../layer.zip . && cd ..
 
     # Step 4: Zip the Lambda function code
     - name: Package Lambda Function
       run: |
-        zip -r function.zip . -i lambda_function.py  # Replace with your Lambda entry file
+        zip -r function.zip src/lambda_function.py  # Replace with your Lambda entry file
 
     # Step 5: Configure AWS credentials
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v3
       with:
-        aws-access-key-id: ${{ secrets.AccessKey }}
-        aws-secret-access-key: ${{ secrets.SecretKey }}
-        aws-region: us-east-1
-        
-    - name: List the contents of the ZIP file
-      run: unzip -l function.zip
+        aws-access-key-id: ${{ secrets.ACCESSKEY }}
+        aws-secret-access-key: ${{ secrets.SECRETKEY }}
+        aws-region: ap-south-1
 
     # Step 6: Publish the Lambda layer
     - name: Publish Lambda Layer
