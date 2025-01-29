@@ -36,8 +36,8 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v3
       with:
-        aws-access-key-id: ${{ AccessKey }}
-        aws-secret-access-key: ${{ SecretKey }}
+        aws-access-key-id: ${{ secrets.AccessKey }}
+        aws-secret-access-key: ${{ secrets.SecretKey }}
         aws-region: us-east-1
 
     # Step 6: Publish the Lambda layer
