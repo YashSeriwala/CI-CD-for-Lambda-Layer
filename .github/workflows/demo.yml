@@ -23,7 +23,7 @@ jobs:
     - name: Zip Lambda function
       run: |
         mkdir package
-        pip install -r requirements.txt -t package/  # If you have dependencies
+        pip install -r layer/requirements.txt -t package/  # If you have dependencies
         cd package
         zip -r ../function.zip .
         cd ..
