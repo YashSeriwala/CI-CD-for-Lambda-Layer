@@ -39,6 +39,9 @@ jobs:
         aws-access-key-id: ${{ secrets.AccessKey }}
         aws-secret-access-key: ${{ secrets.SecretKey }}
         aws-region: us-east-1
+        
+    - name: List the contents of the ZIP file
+      run: unzip -l function.zip
 
     # Step 6: Publish the Lambda layer
     - name: Publish Lambda Layer
